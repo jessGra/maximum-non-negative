@@ -1,11 +1,11 @@
 import { Component } from "@angular/core";
-import { RouterOutlet } from "@angular/router";
-import { NgbAlertModule } from "@ng-bootstrap/ng-bootstrap";
+import { MainContentComponent } from "./core/main-content/main-content.component";
+import { FooterComponent } from "./core/footer/footer.component";
 
 @Component({
   selector: "app-root",
   standalone: true,
-  imports: [RouterOutlet, NgbAlertModule],
+  imports: [MainContentComponent, FooterComponent],
   templateUrl: "./app.component.html",
   styleUrl: "./app.component.css"
 })
