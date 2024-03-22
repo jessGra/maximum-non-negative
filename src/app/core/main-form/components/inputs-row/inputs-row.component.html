@@ -1,0 +1,59 @@
+<!-- inputs row -->
+<div class="row pb-3 mb-3 justify-content-center" [class.border-bottom]="inputRowsLength > 1">
+  <!-- inputs -->
+  <div class="row col row-gap-2">
+    <div class="col-12 col-sm-4">
+      <div class="input-group">
+        <span class="input-group-text" id="x">x</span>
+        <input
+          [(ngModel)]="row.x"
+          name="x{{ index }}"
+          type="text"
+          class="form-control"
+          [class.is-invalid]="errors['x'].includes(index)"
+          aria-label="X"
+          aria-describedby="x"
+          required
+        />
+      </div>
+    </div>
+    <div class="col-12 col-sm-4">
+      <div class="input-group">
+        <span class="input-group-text" id="y">y</span>
+        <input
+          [(ngModel)]="row.y"
+          name="y{{ index }}"
+          type="text"
+          class="form-control"
+          [class.is-invalid]="errors['y'].includes(index)"
+          aria-label="y"
+          aria-describedby="y"
+          required
+        />
+      </div>
+    </div>
+    <div class="col-12 col-sm-4">
+      <div class="input-group">
+        <span class="input-group-text" id="n">n</span>
+        <input
+          [(ngModel)]="row.n"
+          name="n{{ index }}"
+          type="text"
+          class="form-control"
+          [class.is-invalid]="errors['n'].includes(index)"
+          aria-label="n"
+          aria-describedby="n"
+          required
+        />
+      </div>
+    </div>
+  </div>
+  @if (inputRowsLength > 1) {
+  <!-- remove row -->
+  <div class="row col-auto">
+    <button (click)="onDeleteRow()" type="button" class="btn btn-dark">
+      <i class="bi bi-trash3"></i>
+    </button>
+  </div>
+  }
+</div>

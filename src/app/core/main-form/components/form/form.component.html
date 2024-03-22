@@ -1,0 +1,44 @@
+<div class="card">
+  <div class="card-body">
+    <div>
+      <ul>
+        <li *ngIf="errors['x'].length > 0">Please enter a value for <b>x</b> that is between 2 and 1,000,000,000.</li>
+        <li *ngIf="errors['y'].length > 0">
+          Make sure the value of <b>y</b> is greater than or equal to <b>0</b> and less than <b>x</b>.
+        </li>
+        <li *ngIf="errors['n'].length > 0">
+          Enter a value for <b>n</b> that is between the value of <b>y</b> and 1,000,000,000.
+        </li>
+      </ul>
+    </div>
+    <form novalidate (ngSubmit)="calculate()">
+      @for (inputRow of inputRows; track $index) {
+      <app-inputs-row
+        [row]="inputRow"
+        [index]="$index"
+        [errors]="errors"
+        [inputRowsLength]="inputRows.length"
+        (removeInputRowEventEmitter)="deleteRow($index)"
+      />
+      }
+
+      <!-- add case -->
+      <div class="d-grid mb-4 mx-auto">
+        <button
+          (click)="addCase()"
+          [disabled]="inputRows.length >= 10"
+          type="button"
+          class="btn btn-dark border-primary border-0 border-bottom border-2 bg-gradient"
+        >
+          <i class="bi bi-plus-lg me-2"></i> Add case
+        </button>
+        <small class="text-end text-secondary-emphasis">Max. 10</small>
+      </div>
+
+      <!-- submit -->
+      <div class="d-grid gap-2 d-md-flex justify-content-md-end d-md-block">
+        <button type="submit" class="btn btn-primary">Calculate</button>
+      </div>
+    </form>
+  </div>
+</div>
