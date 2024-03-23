@@ -4,45 +4,45 @@
   <div class="row col row-gap-2">
     <div class="col-12 col-sm-4">
       <div class="input-group">
-        <span class="input-group-text" id="x">x</span>
+        <span class="input-group-text" id="divider">Divider</span>
         <input
-          [(ngModel)]="row.x"
-          name="x{{ index }}"
+          [(ngModel)]="row.divider"
+          name="divider{{ index }}"
           type="text"
           class="form-control"
-          [class.is-invalid]="errors['x'].includes(index)"
-          aria-label="X"
-          aria-describedby="x"
+          [class.is-invalid]="errors['divider'].includes(index)"
+          aria-label="divider"
+          aria-describedby="divider"
           required
         />
       </div>
     </div>
     <div class="col-12 col-sm-4">
       <div class="input-group">
-        <span class="input-group-text" id="y">y</span>
+        <span class="input-group-text" id="remainder">Remainder</span>
         <input
-          [(ngModel)]="row.y"
-          name="y{{ index }}"
+          [(ngModel)]="row.remainder"
+          name="remainder{{ index }}"
           type="text"
           class="form-control"
-          [class.is-invalid]="errors['y'].includes(index)"
-          aria-label="y"
-          aria-describedby="y"
+          [class.is-invalid]="errors['remainder'].includes(index)"
+          aria-label="remainder"
+          aria-describedby="remainder"
           required
         />
       </div>
     </div>
     <div class="col-12 col-sm-4">
       <div class="input-group">
-        <span class="input-group-text" id="n">n</span>
+        <span class="input-group-text" id="limit">Limit</span>
         <input
-          [(ngModel)]="row.n"
-          name="n{{ index }}"
+          [(ngModel)]="row.limit"
+          name="limit{{ index }}"
           type="text"
           class="form-control"
-          [class.is-invalid]="errors['n'].includes(index)"
-          aria-label="n"
-          aria-describedby="n"
+          [class.is-invalid]="errors['limit'].includes(index)"
+          aria-label="limit"
+          aria-describedby="limit"
           required
         />
       </div>

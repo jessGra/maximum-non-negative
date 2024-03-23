@@ -17,7 +17,7 @@ export class FormComponent {
 
   isLoading = false;
   inputRows: InputRow[] = [new InputRow()];
-  errors: { [key: string]: number[] } = { x: [], y: [], n: [] };
+  errors: { [key: string]: number[] } = { divider: [], remainder: [], limit: [] };
 
   constructor(private apiService: ApiService) {}
 
@@ -61,22 +61,22 @@ export class FormComponent {
   }
 
   validate() {
-    this.errors = { x: [], y: [], n: [] };
+    this.errors = { divider: [], remainder: [], limit: [] };
     let isValid = true;
 
     this.inputRows.forEach((row, index) => {
-      if (!row.x || isNaN(row.n) || row.x < 2 || row.x > 1000000000) {
-        this.errors["x"].push(index);
+      if (!row.divider || isNaN(row.divider) || row.divider < 2 || row.divider > 1000000000) {
+        this.errors["divider"].push(index);
         isValid = false;
       }
 
-      if (!row.y || isNaN(row.n) || row.y < 0 || row.y >= row.x) {
-        this.errors["y"].push(index);
+      if (!row.remainder || isNaN(row.remainder) || row.remainder < 0 || row.remainder >= row.divider) {
+        this.errors["remainder"].push(index);
         isValid = false;
       }
 
-      if (!row.n || isNaN(row.n) || row.n < row.y || row.n > 1000000000) {
-        this.errors["n"].push(index);
+      if (!row.limit || isNaN(row.limit) || row.limit < row.remainder || row.limit > 1000000000) {
+        this.errors["limit"].push(index);
         isValid = false;
       }
     });

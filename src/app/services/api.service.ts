@@ -11,8 +11,11 @@ export class ApiService {
   constructor(private http: HttpClient) {}
 
   fetchMaximumGET(req: InputRow): Observable<any> {
-    const { x, y, n } = req;
-    return this.http.get(this.apiUrl /* { params: { x: x.toString(), y: y.toString(), n: n.toString() } }*/);
+    const { divider, remainder, limit } = req;
+    return this.http.get(
+      this
+        .apiUrl /* { params: { divider: divider.toString(), remainder: remainder.toString(), limit: limit.toString() } }*/
+    );
   }
 
   fetchMaximumPOST(req: InputRow[]): Observable<any> {

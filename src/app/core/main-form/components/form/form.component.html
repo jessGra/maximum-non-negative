@@ -2,12 +2,14 @@
   <div class="card-body">
     <div>
       <ul>
-        <li *ngIf="errors['x'].length > 0">Please enter a value for <b>x</b> that is between 2 and 1,000,000,000.</li>
-        <li *ngIf="errors['y'].length > 0">
-          Make sure the value of <b>y</b> is greater than or equal to <b>0</b> and less than <b>x</b>.
+        <li *ngIf="errors['divider'].length > 0">
+          Please enter a value for <b>divider</b> that is between 2 and 1,000,000,000.
         </li>
-        <li *ngIf="errors['n'].length > 0">
-          Enter a value for <b>n</b> that is between the value of <b>y</b> and 1,000,000,000.
+        <li *ngIf="errors['remainder'].length > 0">
+          Make sure the value of <b>remainder</b> is greater than or equal to <b>0</b> and less than <b>x</b>.
+        </li>
+        <li *ngIf="errors['limit'].length > 0">
+          Enter a value for <b>limit</b> that is between the value of <b>y</b> and 1,000,000,000.
         </li>
       </ul>
     </div>
