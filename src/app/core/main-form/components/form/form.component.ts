@@ -5,6 +5,7 @@ import { InputsRowComponent } from "../inputs-row/inputs-row.component";
 import { FormsModule } from "@angular/forms";
 import { ApiService } from "../../../../services/api.service";
 import { NgbAlert } from "@ng-bootstrap/ng-bootstrap";
+import { MaximumApiResponse } from "../../../../interfaces/maximum-api-response";
 
 @Component({
   selector: "app-form",
@@ -41,8 +42,8 @@ export class FormComponent {
     });
   }
 
-  private handleApiResponse(resp: any) {
-    if (resp.notification.code === 200) {
+  private handleApiResponse(resp: MaximumApiResponse) {
+    if (resp?.notification?.code === 200) {
       this.setResultsFromFormEventEmitter.emit(resp.data);
     } else {
       this.serverError = resp?.notification?.description || "";
@@ -56,7 +57,7 @@ export class FormComponent {
     this.isLoading = false;
   }
 
-  validate() {
+  validate(): boolean {
     this.errors = { divider: [], remainder: [], limit: [] };
     let isValid = true;
 
