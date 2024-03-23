@@ -26,7 +26,7 @@
       <div class="d-grid mb-4 mx-auto">
         <button
           (click)="addCase()"
-          [disabled]="inputRows.length >= 10"
+          [disabled]="inputRows.length >= 10 || isLoading"
           type="button"
           class="btn btn-dark border-primary border-0 border-bottom border-2 bg-gradient"
         >
@@ -37,7 +37,13 @@
 
       <!-- submit -->
       <div class="d-grid gap-2 d-md-flex justify-content-md-end d-md-block">
+        @if (isLoading) {
+        <div class="spinner-border text-primary" role="status">
+          <span class="visually-hidden">Loading...</span>
+        </div>
+        } @else {
         <button type="submit" class="btn btn-primary">Calculate</button>
+        }
       </div>
     </form>
   </div>

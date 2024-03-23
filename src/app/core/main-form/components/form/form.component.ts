@@ -3,6 +3,7 @@ import { Component, EventEmitter, Output } from "@angular/core";
 import { InputRow } from "../../../../models/input-row";
 import { InputsRowComponent } from "../inputs-row/inputs-row.component";
 import { FormsModule } from "@angular/forms";
+import { ApiService } from "../../../../services/api.service";
 
 @Component({
   selector: "app-form",
@@ -13,8 +14,12 @@ import { FormsModule } from "@angular/forms";
 })
 export class FormComponent {
   @Output() getResultsFromFormEventEmitter = new EventEmitter();
+
+  isLoading = false;
   inputRows: InputRow[] = [new InputRow()];
   errors: { [key: string]: number[] } = { x: [], y: [], n: [] };
+
+  constructor(private apiService: ApiService) {}
 
   addCase() {
     this.inputRows.push(new InputRow());
@@ -22,26 +27,37 @@ export class FormComponent {
 
   deleteRow(index: number) {
     this.inputRows.splice(index, 1);
-    // this.validationMessages.splice(index, 1);
   }
 
   calculate() {
     if (!this.validate()) return;
 
-    let result;
+    this.isLoading = true;
 
     if (this.inputRows.length === 1) {
-      console.log("llamada get");
-      result = [{ x: 7, y: 5, n: 12345, resp: 12339 }];
+      console.log("llamada get", this.inputRows[0]);
+      this.apiService.fetchMaximumGET(this.inputRows[0]).subscribe({
+        next: (resp) => {
+          // resp = [{ x: 7, y: 5, n: 12345, resp: 12339 }];
+          this.getResultsFromFormEventEmitter.emit(resp);
+          this.isLoading = false;
+        },
+        error: (error) => console.error("Error in fetchMaximumGET", error)
+      });
     } else if (this.inputRows.length > 1) {
-      console.log("llamada post");
-      result = [
-        { x: 7, y: 5, n: 12345, resp: 12339 },
-        { x: 7, y: 5, n: 12345, resp: 12339 }
-      ];
+      console.log("llamada post", this.inputRows);
+      this.apiService.fetchMaximumPOST(this.inputRows).subscribe({
+        next: (resp) => {
+          // resp = [
+          //   { x: 7, y: 5, n: 12345, resp: 12339 },
+          //   { x: 7, y: 5, n: 12345, resp: 12339 }
+          // ];
+          this.getResultsFromFormEventEmitter.emit(resp);
+          this.isLoading = false;
+        },
+        error: (error) => console.error("Error in fetchMaximumPOST", error)
+      });
     }
-
-    this.getResultsFromFormEventEmitter.emit(result);
   }
 
   validate() {
