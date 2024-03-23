@@ -69,12 +69,12 @@ export class FormComponent {
         isValid = false;
       }
 
-      if (!remainder || isNaN(remainder) || remainder < 0 || remainder >= divider) {
+      if (isNaN(remainder) || remainder < 0 || remainder >= divider) {
         this.errors["remainder"].push(index);
         isValid = false;
       }
 
-      if (!limit || isNaN(limit) || limit < remainder || limit > 1000000000) {
+      if (isNaN(limit) || limit < remainder || limit > 1000000000) {
         this.errors["limit"].push(index);
         isValid = false;
       }
