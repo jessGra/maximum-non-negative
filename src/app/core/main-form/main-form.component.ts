@@ -13,11 +13,7 @@ import { FormComponent } from "./components/form/form.component";
 export class MainFormComponent {
   results: CalculationResult[] = [];
 
-  newCalculation() {
-    this.results = [];
-  }
-
-  getResultsFromForm(results: CalculationResult[]) {
+  setResults(results: CalculationResult[]) {
     this.results = results;
   }
 }

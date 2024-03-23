@@ -37,6 +37,10 @@
         <small class="text-end text-secondary-emphasis">Max. 10</small>
       </div>
 
+      @if (serverError) {
+      <ngb-alert [dismissible]="false"> <strong>Warning!</strong> {{ serverError }}. </ngb-alert>
+      }
+
       <!-- submit -->
       <div class="d-grid gap-2 d-md-flex justify-content-md-end d-md-block">
         @if (isLoading) {

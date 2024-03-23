@@ -4,20 +4,22 @@ import { InputRow } from "../../../../models/input-row";
 import { InputsRowComponent } from "../inputs-row/inputs-row.component";
 import { FormsModule } from "@angular/forms";
 import { ApiService } from "../../../../services/api.service";
+import { NgbAlert } from "@ng-bootstrap/ng-bootstrap";
 
 @Component({
   selector: "app-form",
   standalone: true,
-  imports: [FormsModule, NgIf, InputsRowComponent],
+  imports: [FormsModule, NgIf, InputsRowComponent, NgbAlert],
   templateUrl: "./form.component.html",
   styleUrl: "./form.component.css"
 })
 export class FormComponent {
-  @Output() getResultsFromFormEventEmitter = new EventEmitter();
+  @Output() setResultsFromFormEventEmitter = new EventEmitter();
 
   isLoading = false;
   inputRows: InputRow[] = [new InputRow()];
   errors: { [key: string]: number[] } = { divider: [], remainder: [], limit: [] };
+  serverError: string = "";
 
   constructor(private apiService: ApiService) {}
 
@@ -38,8 +40,12 @@ export class FormComponent {
       console.log("llamada get", this.inputRows[0]);
       this.apiService.fetchMaximumGET(this.inputRows[0]).subscribe({
         next: (resp) => {
-          // resp = [{ x: 7, y: 5, n: 12345, resp: 12339 }];
-          this.getResultsFromFormEventEmitter.emit(resp);
+          // resp = [{ divider: 7, remainder: 5, limit: 12345, result: 12339 }];
+          if (resp.notification.code === 200) {
+            this.setResultsFromFormEventEmitter.emit(resp.data);
+          } else {
+            this.serverError = resp?.notification?.description || "";
+          }
           this.isLoading = false;
         },
         error: (error) => console.error("Error in fetchMaximumGET", error)
@@ -49,10 +55,14 @@ export class FormComponent {
       this.apiService.fetchMaximumPOST(this.inputRows).subscribe({
         next: (resp) => {
           // resp = [
-          //   { x: 7, y: 5, n: 12345, resp: 12339 },
-          //   { x: 7, y: 5, n: 12345, resp: 12339 }
+          //   { divider: 7, remainder: 5, limit: 12345, result: 12339 },
+          //   { divider: 7, remainder: 5, limit: 12345, result: 12339 }
           // ];
-          this.getResultsFromFormEventEmitter.emit(resp);
+          if (resp.notification.code === 200) {
+            this.setResultsFromFormEventEmitter.emit(resp.data);
+          } else {
+            this.serverError = resp?.notification?.description || "";
+          }
           this.isLoading = false;
         },
         error: (error) => console.error("Error in fetchMaximumPOST", error)
