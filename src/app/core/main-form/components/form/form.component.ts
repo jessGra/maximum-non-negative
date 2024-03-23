@@ -62,9 +62,7 @@ export class FormComponent {
     let isValid = true;
 
     this.inputRows.forEach((row: InputRow, index) => {
-      let remainder = parseInt(row.remainder);
-      let divider = parseInt(row.divider);
-      let limit = parseInt(row.limit);
+      let { divider, remainder, limit } = row;
 
       if (!divider || isNaN(divider) || divider < 2 || divider > 1000000000) {
         this.errors["divider"].push(index);

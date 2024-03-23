@@ -8,7 +8,7 @@
         <input
           [(ngModel)]="row.divider"
           name="divider{{ index }}"
-          type="text"
+          type="number"
           class="form-control"
           [class.is-invalid]="errors['divider'].includes(index)"
           aria-label="divider"
@@ -23,7 +23,7 @@
         <input
           [(ngModel)]="row.remainder"
           name="remainder{{ index }}"
-          type="text"
+          type="number"
           class="form-control"
           [class.is-invalid]="errors['remainder'].includes(index)"
           aria-label="remainder"
@@ -38,7 +38,7 @@
         <input
           [(ngModel)]="row.limit"
           name="limit{{ index }}"
-          type="text"
+          type="number"
           class="form-control"
           [class.is-invalid]="errors['limit'].includes(index)"
           aria-label="limit"
