@@ -7,18 +7,22 @@ import { InputRow } from "../models/input-row";
   providedIn: "root"
 })
 export class ApiService {
-  readonly apiUrl = "https://65fdff9db2a18489b385b087.mockapi.io/maximum-get";
+  readonly apiUrl = "http://67.202.36.135/operator/maximum";
   constructor(private http: HttpClient) {}
 
-  fetchMaximumGET(req: InputRow): Observable<any> {
-    const { divider, remainder, limit } = req;
-    return this.http.get(
-      this
-        .apiUrl /* { params: { divider: divider.toString(), remainder: remainder.toString(), limit: limit.toString() } }*/
-    );
+  fetchMaximum(inputRows: InputRow[]): Observable<any> {
+    const request = inputRows.length === 1 ? this.fetchMaximumGET(inputRows[0]) : this.fetchMaximumPOST(inputRows);
+    return request;
   }
 
-  fetchMaximumPOST(req: InputRow[]): Observable<any> {
+  private fetchMaximumGET(req: InputRow): Observable<any> {
+    const { divider, remainder, limit } = req;
+    return this.http.get(this.apiUrl, {
+      params: { divider: divider.toString(), remainder: remainder.toString(), limit: limit.toString() }
+    });
+  }
+
+  private fetchMaximumPOST(req: InputRow[]): Observable<any> {
     return this.http.post(this.apiUrl, req);
   }
 }

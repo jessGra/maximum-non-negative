@@ -33,41 +33,27 @@ export class FormComponent {
 
   calculate() {
     if (!this.validate()) return;
-
     this.isLoading = true;
 
-    if (this.inputRows.length === 1) {
-      console.log("llamada get", this.inputRows[0]);
-      this.apiService.fetchMaximumGET(this.inputRows[0]).subscribe({
-        next: (resp) => {
-          // resp = [{ divider: 7, remainder: 5, limit: 12345, result: 12339 }];
-          if (resp.notification.code === 200) {
-            this.setResultsFromFormEventEmitter.emit(resp.data);
-          } else {
-            this.serverError = resp?.notification?.description || "";
-          }
-          this.isLoading = false;
-        },
-        error: (error) => console.error("Error in fetchMaximumGET", error)
-      });
-    } else if (this.inputRows.length > 1) {
-      console.log("llamada post", this.inputRows);
-      this.apiService.fetchMaximumPOST(this.inputRows).subscribe({
-        next: (resp) => {
-          // resp = [
-          //   { divider: 7, remainder: 5, limit: 12345, result: 12339 },
-          //   { divider: 7, remainder: 5, limit: 12345, result: 12339 }
-          // ];
-          if (resp.notification.code === 200) {
-            this.setResultsFromFormEventEmitter.emit(resp.data);
-          } else {
-            this.serverError = resp?.notification?.description || "";
-          }
-          this.isLoading = false;
-        },
-        error: (error) => console.error("Error in fetchMaximumPOST", error)
-      });
+    this.apiService.fetchMaximum(this.inputRows).subscribe({
+      next: (resp) => this.handleApiResponse(resp),
+      error: (error) => this.handleError(error)
+    });
+  }
+
+  private handleApiResponse(resp: any) {
+    if (resp.notification.code === 200) {
+      this.setResultsFromFormEventEmitter.emit(resp.data);
+    } else {
+      this.serverError = resp?.notification?.description || "";
     }
+    this.isLoading = false;
+  }
+
+  private handleError(error: any) {
+    console.error("Error in API request:", error);
+    this.serverError = "An error occurred. Please try again later.";
+    this.isLoading = false;
   }
 
   validate() {
