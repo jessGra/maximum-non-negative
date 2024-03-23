@@ -7,7 +7,7 @@ import { InputRow } from "../models/input-row";
   providedIn: "root"
 })
 export class ApiService {
-  readonly apiUrl = "http://67.202.36.135/operator/maximum";
+  readonly apiUrl = "http://ec2-3-89-56-177.compute-1.amazonaws.com:8080/operator/maximum";
   constructor(private http: HttpClient) {}
 
   fetchMaximum(inputRows: InputRow[]): Observable<any> {
