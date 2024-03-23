@@ -1,5 +1,5 @@
 export class InputRow {
-  divider!: number; //x
-  remainder!: number; //y
-  limit!: number; //n
+  divider!: string; //x
+  remainder!: string; //y
+  limit!: string; //n
 }

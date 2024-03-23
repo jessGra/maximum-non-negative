@@ -44,7 +44,7 @@ export class FormComponent {
 
   private handleApiResponse(resp: MaximumApiResponse) {
     if (resp?.notification?.code === 200) {
-      this.setResultsFromFormEventEmitter.emit(resp.data);
+      this.setResultsFromFormEventEmitter.emit(Array.isArray(resp.data) ? resp.data : [resp.data]);
     } else {
       this.serverError = resp?.notification?.description || "";
     }
@@ -61,18 +61,22 @@ export class FormComponent {
     this.errors = { divider: [], remainder: [], limit: [] };
     let isValid = true;
 
-    this.inputRows.forEach((row, index) => {
-      if (!row.divider || isNaN(row.divider) || row.divider < 2 || row.divider > 1000000000) {
+    this.inputRows.forEach((row: InputRow, index) => {
+      let remainder = parseInt(row.remainder);
+      let divider = parseInt(row.divider);
+      let limit = parseInt(row.limit);
+
+      if (!divider || isNaN(divider) || divider < 2 || divider > 1000000000) {
         this.errors["divider"].push(index);
         isValid = false;
       }
 
-      if (!row.remainder || isNaN(row.remainder) || row.remainder < 0 || row.remainder >= row.divider) {
+      if (!remainder || isNaN(remainder) || remainder < 0 || remainder >= divider) {
         this.errors["remainder"].push(index);
         isValid = false;
       }
 
-      if (!row.limit || isNaN(row.limit) || row.limit < row.remainder || row.limit > 1000000000) {
+      if (!limit || isNaN(limit) || limit < remainder || limit > 1000000000) {
         this.errors["limit"].push(index);
         isValid = false;
       }
