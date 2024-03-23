@@ -6,10 +6,10 @@
           Please enter a value for <b>divider</b> that is between 2 and 1,000,000,000.
         </li>
         <li *ngIf="errors['remainder'].length > 0">
-          Make sure the value of <b>remainder</b> is greater than or equal to <b>0</b> and less than <b>x</b>.
+          Make sure the value of <b>remainder</b> is greater than or equal to <b>0</b> and less than <b>divider</b>.
         </li>
         <li *ngIf="errors['limit'].length > 0">
-          Enter a value for <b>limit</b> that is between the value of <b>y</b> and 1,000,000,000.
+          Enter a value for <b>limit</b> that is between the value of <b>remainder</b> and 1,000,000,000.
         </li>
       </ul>
     </div>
